@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <!-- ============================================================
+         META TAGS — Character encoding, viewport, SEO, social sharing
+         ============================================================ -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Anti-FODT: apply saved/OS theme before first paint (no visible flicker) -->
+    <script>
+      (function () {
+        var t = localStorage.getItem('etw-theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.style.colorScheme = t === 'dark' ? 'dark' : 'light';
+      })();
+    </script>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://explore-the-world.app/" />
+
+    <!-- Theme Color for browser address bars -->
+    <meta name="theme-color" content="#0F2747" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#0F2747" media="(prefers-color-scheme: light)" />
+
+    <!-- Primary SEO Meta Tags -->
+    <title>Explore the World | Discover Countries &amp; Cultures</title>
+    <meta
+      name="description"
+      content="Explore the World — discover detailed information about every country, including culture, population, languages, flags, and more."
+    />
+    <meta
+      name="keywords"
+      content="explore world, countries, cultures, travel, geography, flags, population, languages"
+    />
+    <meta name="author" content="Explore the World" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://explore-the-world.app/" />
+    <meta property="og:site_name" content="Explore the World" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Explore the World | Discover Countries &amp; Cultures" />
+    <meta
+      property="og:description"
+      content="Discover detailed information about every country — culture, population, languages, flags, and more."
+    />
+    <meta property="og:image" content="https://explore-the-world.app/assets/icons/favicon.svg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Explore the World | Discover Countries &amp; Cultures" />
+    <meta
+      name="twitter:description"
+      content="Discover detailed information about every country — culture, population, languages, flags, and more."
+    />
+    <meta name="twitter:image" content="https://explore-the-world.app/assets/icons/favicon.svg" />
+
+    <!-- Structured Data (JSON-LD: WebSite + SearchAction) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Explore the World",
+      "url": "https://explore-the-world.app/",
+      "description": "Discover detailed information about every country, including culture, population, languages, flags, and more.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://explore-the-world.app/?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- ============================================================
+         FAVICON
+         ============================================================ -->
+    <link rel="icon" type="image/svg+xml" href="./assets/icons/favicon.svg" />
+
+    <!-- ============================================================
+         STYLESHEETS — Main styles loaded first, responsive overrides second
+         ============================================================ -->
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/responsive.css" />
+
+    <!-- Google Fonts preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- ============================================================
+         SKIP LINK — Accessibility: allows keyboard users to jump to content
+         ============================================================ -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- ============================================================
+         HEADER — Sticky navbar: logo | nav links | theme toggle | hamburger
+         ============================================================ -->
+    <header class="site-header" id="site-header" role="banner">
+      <div class="container header__inner">
+
+        <!-- ── Logo / Brand ──────────────────────────────────────── -->
+        <a href="./index.html" class="header__logo" aria-label="Explore the World — Home">
+          <span class="logo-icon" aria-hidden="true">🌍</span>
+          <span class="logo-text">Explore <span class="logo-text--accent">World</span></span>
+        </a>
+
+        <!-- ── Centre: Desktop Navigation ───────────────────────── -->
+        <nav class="header__nav" role="navigation" aria-label="Primary navigation">
+          <ul class="nav__list" role="list">
+            <li>
+              <a href="#hero" class="nav__link active" data-nav="home">
+                <span class="nav__link-label">Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="#countries" class="nav__link" data-nav="countries">
+                <span class="nav__link-label">Countries</span>
+              </a>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="nav__link nav__link--fav"
+                id="nav-fav-btn"
+                data-nav="favorites"
+                aria-label="View favorite countries"
+                title="View favorite countries"
+              >
+                <span class="nav__fav-icon" aria-hidden="true">❤️</span>
+                <span class="nav__link-label">Favorites</span>
+                <span class="nav__fav-badge" id="nav-fav-badge" aria-label="0 favorites">0</span>
+              </button>
+            </li>
+            <li>
+              <a href="#about" class="nav__link" data-nav="about">
+                <span class="nav__link-label">About</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- ── Right: Controls ───────────────────────────────────── -->
+        <div class="header__controls">
+          <!-- Theme Toggle -->
+          <button
+            class="btn-icon theme-toggle"
+            id="theme-toggle"
+            aria-label="Switch to dark mode"
+            title="Switch to dark mode"
+          >
+            <span class="theme-toggle__icon" aria-hidden="true">🌙</span>
+          </button>
+
+          <!-- Hamburger (mobile only) -->
+          <button
+            class="btn-icon hamburger"
+            id="nav-toggle"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
+            <span class="hamburger__bar" aria-hidden="true"></span>
+            <span class="hamburger__bar" aria-hidden="true"></span>
+            <span class="hamburger__bar" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ── Mobile Navigation Drawer ──────────────────────────── -->
+      <nav
+        class="mobile-menu"
+        id="mobile-menu"
+        role="navigation"
+        aria-label="Mobile navigation"
+        aria-hidden="true"
+      >
+        <ul class="mobile-menu__list" role="list">
+          <li><a href="#hero"      class="nav__link mobile-menu__link active" data-nav="home">Home</a></li>
+          <li><a href="#countries" class="nav__link mobile-menu__link" data-nav="countries">Countries</a></li>
+          <li>
+            <button
+              type="button"
+              class="nav__link mobile-menu__link nav__link--fav"
+              id="mobile-fav-btn"
+              data-nav="favorites"
+              aria-label="View favorite countries"
+            >
+              <span class="nav__fav-icon" aria-hidden="true">❤️</span>
+              <span>Favorites</span>
+              <span class="nav__fav-badge" id="mobile-fav-badge" aria-label="0 favorites">0</span>
+            </button>
+          </li>
+          <li><a href="#about"     class="nav__link mobile-menu__link" data-nav="about">About</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- ============================================================
+         MAIN CONTENT
+         ============================================================ -->
+    <main id="main-content">
+
+      <!-- ── HERO SECTION ──────────────────────────────────────── -->
+      <section class="hero" id="hero" aria-labelledby="hero-heading">
+
+        <!-- Decorative SVG world-map background (inline, no external request) -->
+        <div class="hero__map-bg" aria-hidden="true">
+          <svg class="hero__map-svg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice"
+               xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Simplified world landmasses as decorative paths -->
+            <!-- Americas -->
+            <path d="M140,120 C120,140 100,180 110,220 C120,260 130,290 120,330
+                     C110,370 90,400 100,440 C110,480 140,500 150,480
+                     C160,460 155,430 170,400 C185,370 200,350 195,310
+                     C190,270 180,240 190,200 C200,160 210,130 190,110 Z"
+                  class="hero__map-land"/>
+            <path d="M200,80 C220,70 250,75 270,90 C290,105 300,130 285,150
+                     C270,170 245,165 230,155 C215,145 205,130 200,110 Z"
+                  class="hero__map-land"/>
+            <!-- Europe / Africa -->
+            <path d="M500,80 C520,75 545,80 555,100 C565,120 560,145 545,155
+                     C530,165 510,160 500,145 C490,130 490,100 500,80 Z"
+                  class="hero__map-land"/>
+            <path d="M490,170 C515,160 545,165 560,185 C575,205 580,240 565,275
+                     C550,310 520,330 495,340 C470,350 445,340 435,315
+                     C425,290 440,255 455,230 C470,205 465,180 490,170 Z"
+                  class="hero__map-land"/>
+            <!-- Asia -->
+            <path d="M600,60 C650,50 720,55 780,70 C840,85 890,110 910,145
+                     C930,180 920,220 895,245 C870,270 835,275 800,260
+                     C765,245 735,215 700,200 C665,185 625,185 600,170
+                     C575,155 560,130 570,105 C580,80 575,65 600,60 Z"
+                  class="hero__map-land"/>
+            <!-- Australia / Oceania -->
+            <path d="M830,340 C860,330 895,335 915,355 C935,375 935,405 915,420
+                     C895,435 865,430 845,415 C825,400 820,370 830,340 Z"
+                  class="hero__map-land"/>
+            <!-- Decorative grid lines (latitude / longitude) -->
+            <line x1="0" y1="150" x2="1200" y2="150" class="hero__map-grid"/>
+            <line x1="0" y1="300" x2="1200" y2="300" class="hero__map-grid"/>
+            <line x1="0" y1="450" x2="1200" y2="450" class="hero__map-grid"/>
+            <line x1="200" y1="0" x2="200" y2="600" class="hero__map-grid"/>
+            <line x1="400" y1="0" x2="400" y2="600" class="hero__map-grid"/>
+            <line x1="600" y1="0" x2="600" y2="600" class="hero__map-grid"/>
+            <line x1="800" y1="0" x2="800" y2="600" class="hero__map-grid"/>
+            <line x1="1000" y1="0" x2="1000" y2="600" class="hero__map-grid"/>
+          </svg>
+        </div>
+
+        <!-- Floating decorative orbs -->
+        <div class="hero__orb hero__orb--1" aria-hidden="true"></div>
+        <div class="hero__orb hero__orb--2" aria-hidden="true"></div>
+        <div class="hero__orb hero__orb--3" aria-hidden="true"></div>
+
+        <!-- Hero content -->
+        <div class="container hero__inner">
+
+          <!-- Badge -->
+          <div class="hero__badge" aria-label="Gateway badge">
+            <span class="hero__badge-dot" aria-hidden="true"></span>
+            YOUR GATEWAY TO THE WORLD
+          </div>
+
+          <!-- Main heading -->
+          <h1 class="hero__title" id="hero-heading">
+            Discover the World,<br />
+            <em class="hero__title-accent">One Country at a Time.</em>
+          </h1>
+
+          <!-- Description -->
+          <p class="hero__description">
+            Explore countries, discover cultures, learn about languages and
+            uncover fascinating facts about every corner of our planet.
+          </p>
+
+          <!-- Hero Search Box -->
+          <div class="hero__search-wrapper" role="search">
+            <div class="hero__search-box">
+              <span class="hero__search-icon" aria-hidden="true">
+                <img src="./assets/icons/search.svg" alt="" width="20" height="20" />
+              </span>
+              <input
+                type="search"
+                id="search-input"
+                class="hero__search-input"
+                placeholder="Search any country..."
+                aria-label="Search for a country"
+                autocomplete="off"
+                spellcheck="false"
+              />
+              <button class="hero__search-btn btn" aria-label="Search">
+                <span>Search</span>
+              </button>
+            </div>
+            <!-- Autocomplete suggestions (populated by search.js) -->
+            <ul
+              id="search-suggestions"
+              class="search-suggestions"
+              role="listbox"
+              aria-label="Search suggestions"
+            ></ul>
+          </div>
+
+          <!-- CTAs -->
+          <div class="hero__ctas">
+            <a href="#countries" class="btn btn--hero-primary">
+              Explore Countries
+              <span aria-hidden="true">↓</span>
+            </a>
+          </div>
+
+          <!-- Stats strip -->
+          <div class="hero__stats" aria-label="Quick facts">
+            <div class="hero__stat">
+              <span class="hero__stat-value">195</span>
+              <span class="hero__stat-label">Countries</span>
+            </div>
+            <div class="hero__stat-divider" aria-hidden="true"></div>
+            <div class="hero__stat">
+              <span class="hero__stat-value">7</span>
+              <span class="hero__stat-label">Continents</span>
+            </div>
+            <div class="hero__stat-divider" aria-hidden="true"></div>
+            <div class="hero__stat">
+              <span class="hero__stat-value">7K+</span>
+              <span class="hero__stat-label">Languages</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── GLOBAL STATISTICS SECTION ───────────────────────── -->
+      <section class="stats-section" id="stats" aria-labelledby="stats-heading">
+        <div class="container">
+          <header class="section-header stats-section__header">
+            <h2 class="section-title" id="stats-heading">Discover Our World</h2>
+            <p class="stats-section__subtitle">
+              Some fascinating numbers that show the diversity and scale of our planet.
+            </p>
+          </header>
+
+          <div class="stats-grid" role="region" aria-label="Global planet statistics">
+            <!-- CARD 1: Countries -->
+            <article class="stat-card" data-target="195" data-suffix="+" data-decimals="0">
+              <div class="stat-card__icon-wrap" aria-hidden="true">
+                <svg class="stat-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+              </div>
+              <div class="stat-card__content">
+                <div class="stat-card__value-wrap">
+                  <span class="stat-card__number" data-counter>195</span><span class="stat-card__suffix">+</span>
+                </div>
+                <h3 class="stat-card__label">Countries</h3>
+                <p class="stat-card__desc">Discover countries around the world.</p>
+              </div>
+            </article>
+
+            <!-- CARD 2: World Population -->
+            <article class="stat-card" data-target="8.2" data-suffix="B+" data-decimals="1">
+              <div class="stat-card__icon-wrap" aria-hidden="true">
+                <svg class="stat-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <div class="stat-card__content">
+                <div class="stat-card__value-wrap">
+                  <span class="stat-card__number" data-counter>8.2</span><span class="stat-card__suffix">B+</span>
+                </div>
+                <h3 class="stat-card__label">World Population</h3>
+                <p class="stat-card__desc">People living across our planet.</p>
+              </div>
+            </article>
+
+            <!-- CARD 3: Continents -->
+            <article class="stat-card" data-target="7" data-suffix="" data-decimals="0">
+              <div class="stat-card__icon-wrap" aria-hidden="true">
+                <svg class="stat-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+                  <line x1="8" y1="2" x2="8" y2="18"></line>
+                  <line x1="16" y1="6" x2="16" y2="22"></line>
+                </svg>
+              </div>
+              <div class="stat-card__content">
+                <div class="stat-card__value-wrap">
+                  <span class="stat-card__number" data-counter>7</span>
+                </div>
+                <h3 class="stat-card__label">Continents</h3>
+                <p class="stat-card__desc">Explore the seven continents.</p>
+              </div>
+            </article>
+
+            <!-- CARD 4: Languages -->
+            <article class="stat-card" data-target="7000" data-suffix="+" data-decimals="0" data-format="locale">
+              <div class="stat-card__icon-wrap" aria-hidden="true">
+                <svg class="stat-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 8l6 6"></path>
+                  <path d="M4 14l6-6 2-3"></path>
+                  <path d="M2 5h12"></path>
+                  <path d="M7 2h1"></path>
+                  <path d="M22 22l-5-10-5 10"></path>
+                  <path d="M14 18h6"></path>
+                </svg>
+              </div>
+              <div class="stat-card__content">
+                <div class="stat-card__value-wrap">
+                  <span class="stat-card__number" data-counter>7,000</span><span class="stat-card__suffix">+</span>
+                </div>
+                <h3 class="stat-card__label">Languages</h3>
+                <p class="stat-card__desc">Languages spoken around the world.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── EXPLORE / COUNTRIES SECTION ───────────────────────── -->
+      <section class="explore-section" id="countries" aria-labelledby="explore-heading">
+        <!-- Backward-compatible anchor for #explore references -->
+        <span id="explore" class="visually-hidden"></span>
+        <div class="container">
+          <!-- Section Header & Controls -->
+          <header class="explore-section__header">
+            <div class="explore-section__title-wrap">
+              <span class="explore-section__badge" aria-hidden="true">Destinations</span>
+              <h2 class="section-title" id="explore-heading">Explore Countries</h2>
+              <p class="explore-section__subtitle">
+                Journey across continents and discover the countries that make our world extraordinary.
+              </p>
+            </div>
+
+            <!-- Section Controls Bar (Count + View All button) -->
+            <div class="explore-controls">
+              <div class="explore-controls__count-wrap">
+                <span class="explore-controls__pulse" aria-hidden="true"></span>
+                <span class="explore-controls__count" id="results-count" aria-live="polite">
+                  Showing 0 Countries
+                </span>
+              </div>
+              <button type="button" class="btn btn--outline explore-controls__btn" id="view-all-btn">
+                <span>View All Countries</span>
+                <span class="btn-arrow" aria-hidden="true">→</span>
+              </button>
+            </div>
+          </header>
+
+          <!-- ── FILTER & SORT TOOLBAR (Phase 6) ────────────────── -->
+          <div class="filter-bar" id="filter-bar" role="toolbar" aria-label="Country search, filters and sorting">
+            <!-- In-page Live Search Input (synchronized with hero search) -->
+            <div class="filter-bar__group filter-bar__group--search">
+              <div class="filter-search-box">
+                <span class="filter-search-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </span>
+                <input
+                  type="search"
+                  id="filter-search-input"
+                  class="filter-search-input"
+                  placeholder="Search by country or capital…"
+                  aria-label="Filter countries by name or capital"
+                  autocomplete="off"
+                  spellcheck="false"
+                />
+              </div>
+            </div>
+
+            <!-- Region Filter Dropdown -->
+            <div class="filter-bar__group">
+              <label for="region-filter" class="filter-bar__label">
+                <span class="filter-bar__icon" aria-hidden="true">🌍</span>
+                <span>Region:</span>
+              </label>
+              <select id="region-filter" class="filter-select" aria-label="Filter countries by region">
+                <option value="">All Regions</option>
+                <option value="Africa">Africa</option>
+                <option value="Americas">Americas</option>
+                <option value="Asia">Asia</option>
+                <option value="Europe">Europe</option>
+                <option value="Oceania">Oceania</option>
+              </select>
+            </div>
+
+            <!-- Sorting Dropdown -->
+            <div class="filter-bar__group">
+              <label for="sort-select" class="filter-bar__label">
+                <span class="filter-bar__icon" aria-hidden="true">⇅</span>
+                <span>Sort By:</span>
+              </label>
+              <select id="sort-select" class="filter-select" aria-label="Sort countries">
+                <option value="name-asc">Name: A to Z</option>
+                <option value="name-desc">Name: Z to A</option>
+                <option value="population-desc">Population: High to Low</option>
+                <option value="population-asc">Population: Low to High</option>
+                <option value="area-desc">Area: High to Low</option>
+                <option value="area-asc">Area: Low to High</option>
+              </select>
+            </div>
+
+            <!-- Favorites Filter Toggle -->
+            <div class="filter-bar__group filter-bar__group--fav">
+              <button
+                type="button"
+                id="filter-fav-btn"
+                class="btn filter-fav-btn"
+                aria-pressed="false"
+                aria-label="Filter to show only favorite countries"
+                title="Filter to show only favorite countries"
+              >
+                <span class="filter-fav-icon" aria-hidden="true">❤️</span>
+                <span>Favorites</span>
+                <span class="filter-fav-count" id="filter-fav-count">(0)</span>
+              </button>
+            </div>
+
+            <!-- Clear Filters Button -->
+            <div class="filter-bar__group filter-bar__group--actions">
+              <button
+                type="button"
+                id="clear-filters-btn"
+                class="btn btn--secondary filter-clear-btn"
+                aria-label="Clear all filters and reset search"
+              >
+                <span class="filter-clear-icon" aria-hidden="true">✕</span>
+                <span>Clear Filters</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Countries Grid -->
+          <div
+            class="countries-grid"
+            id="countries-grid"
+            role="list"
+            aria-label="Countries list"
+            aria-live="polite"
+            aria-busy="false"
+          >
+            <!-- Country cards injected here by renderCountryCard() in app.js -->
+          </div>
+
+          <!-- Loading Spinner -->
+          <div class="loading-spinner" id="loading-spinner" aria-label="Loading countries from REST Countries API" role="status" hidden>
+            <div class="spinner" aria-hidden="true"></div>
+            <p>Fetching countries from the API…</p>
+            <p class="loading-spinner__sub">This may take a moment on the first load.</p>
+          </div>
+
+          <!-- Error Message -->
+          <div class="error-message" id="error-message" role="alert" aria-live="assertive" hidden>
+            <span class="error-message__icon" aria-hidden="true">⚠️</span>
+            <p>Failed to load countries. Please check your connection and try again.</p>
+            <button class="btn btn--primary" id="retry-btn" aria-label="Retry loading countries">
+              <span>Try Again</span>
+            </button>
+          </div>
+
+          <!-- Empty State (Phase 6) -->
+          <div class="empty-state" id="empty-state" role="status" aria-live="polite" hidden>
+            <div class="empty-state__icon" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <line x1="8" y1="11" x2="14" y2="11"></line>
+              </svg>
+            </div>
+            <h3 class="empty-state__title">No countries found</h3>
+            <p class="empty-state__desc">No countries found. Try another search or clear your filters.</p>
+            <button type="button" class="btn btn--secondary empty-state__btn" id="empty-clear-btn" aria-label="Clear active filters">
+              <span>Clear Filters</span>
+            </button>
+          </div>
+
+          <!-- Load More -->
+          <div class="load-more-wrapper" id="load-more-wrapper" hidden>
+            <button class="btn btn--outline" id="load-more-btn">Load More Countries</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── REGIONS SECTION ───────────────────────────────────── -->
+      <section class="regions-section" id="regions" aria-labelledby="regions-heading">
+        <div class="container">
+          <h2 class="section-title" id="regions-heading">Browse by Region</h2>
+          <div class="regions-grid" role="list">
+            <!-- Region cards injected here by app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ── COUNTRY DETAIL PANEL (overlay / modal) ─────────────── -->
+      <section
+        class="detail-panel"
+        id="detail-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="detail-country-name"
+        aria-hidden="true"
+        hidden
+      >
+        <div class="detail-panel__backdrop" id="detail-backdrop"></div>
+        <div class="detail-panel__card">
+          <button
+            class="detail-panel__close btn-icon"
+            id="detail-close"
+            aria-label="Close country details"
+          >✕</button>
+          <!-- Detail content injected here by details.js -->
+          <div class="detail-panel__content" id="detail-content"></div>
+        </div>
+      </section>
+
+      <!-- ── ABOUT SECTION ─────────────────────────────────────── -->
+      <section class="about-section" id="about" aria-labelledby="about-heading">
+        <div class="container about-section__inner">
+          <h2 class="section-title" id="about-heading">About This Project</h2>
+          <p class="about-section__text">
+            <strong>Explore the World</strong> is an open, ad-free reference built with
+            pure HTML5, CSS3, and Vanilla JavaScript — no frameworks, no dependencies.
+            Country data is fetched live from the
+            <a href="https://restcountries.com" target="_blank" rel="noopener noreferrer">
+              REST Countries API
+            </a>.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="container footer__inner">
+        <p class="footer__copy">
+          &copy; <span id="footer-year"></span> Explore the World. Data sourced from
+          <a href="https://restcountries.com" target="_blank" rel="noopener noreferrer">REST Countries</a>.
+        </p>
+        <p class="footer__attribution">
+          Built with ❤️ using HTML5 · CSS3 · Vanilla JS
+        </p>
+      </div>
+    </footer>
+
+    <!-- ============================================================
+         BACK-TO-TOP BUTTON
+         ============================================================ -->
+    <button
+      class="back-to-top"
+      id="back-to-top"
+      aria-label="Scroll back to top"
+      title="Back to top"
+      hidden
+    >
+      ↑
+    </button>
+
+    <!-- ============================================================
+         TOAST NOTIFICATION CONTAINER
+         ============================================================ -->
+    <div
+      class="toast-container"
+      id="toast-container"
+      role="status"
+      aria-live="polite"
+      aria-atomic="false"
+    ></div>
+
+    <!-- ============================================================
+         JAVASCRIPT — Deferred modules (order matters)
+         1. api.js             — data fetching layer (REST Countries API)
+         2. countries-data.js  — offline fallback / demo dataset (Phase 4)
+         3. favorites.js       — wishlist & favorites management (Phase 8)
+         4. search.js          — search & filter logic
+         5. details.js         — country detail panel
+         6. theme.js           — dark / light mode toggle
+         7. stats.js           — global statistics counter & animations
+         8. app.js             — main orchestrator (loaded last)
+         ============================================================ -->
+    <script src="./js/api.js" defer></script>
+    <script src="./js/countries-data.js" defer></script>
+    <script src="./js/favorites.js" defer></script>
+    <script src="./js/search.js" defer></script>
+    <script src="./js/details.js" defer></script>
+    <script src="./js/theme.js" defer></script>
+    <script src="./js/stats.js" defer></script>
+    <script src="./js/app.js" defer></script>
+  </body>
+</html>

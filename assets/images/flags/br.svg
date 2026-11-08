@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <rect width="1000" height="700" fill="#009C3B"/>
+  <!-- Yellow rhombus -->
+  <polygon points="500,85 915,350 500,615 85,350" fill="#FFDF00"/>
+  <!-- Blue circle -->
+  <circle cx="500" cy="350" r="175" fill="#002776"/>
+  <!-- White curved band across disc -->
+  <path d="M335,370 Q500,310 665,370 Q500,340 335,370 Z" fill="#FFFFFF"/>
+</svg>

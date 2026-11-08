@@ -1,0 +1,546 @@
+/* =============================================================
+   responsive.css — Responsive / Media Query Overrides
+   "Explore the World" project
+
+   Breakpoints:
+   - Base            : all screens  (style.css)
+   - ≤ 1023px        : tablet — collapse nav → hamburger
+   - ≤  767px        : large phone — stack hero, simplify layout
+   - ≤  479px        : small phone — single column
+   - ≥ 1280px        : desktop   — 4-col grid
+   - print           : strip decorative chrome
+   ============================================================= */
+
+
+/* ─────────────────────────────────────────────────────────────
+   LARGE DESKTOPS (≥ 1280px)
+   ───────────────────────────────────────────────────────────── */
+@media (min-width: 1280px) {
+  :root {
+    --grid-cols: 4;
+  }
+
+  .regions-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   MEDIUM SCREENS (768px – 1279px) — 3-column grid
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 1279px) {
+  :root {
+    --grid-cols: 3;
+  }
+
+  .hero__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  .regions-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   TABLETS (≤ 1023px) — collapse desktop nav → hamburger
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  :root {
+    --grid-cols: 2;
+  }
+
+  /* ── Navbar ── */
+  .header__nav {
+    display: none;        /* desktop centre nav hidden */
+  }
+
+  .hamburger {
+    display: flex;        /* show hamburger */
+  }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 80vh;
+    padding: calc(var(--space-16) + 10px) 0 var(--space-16);
+  }
+
+  .hero__title {
+    font-size: clamp(1.9rem, 5vw, 2.8rem);
+  }
+
+  .hero__description {
+    font-size: var(--fs-base);
+  }
+
+  .hero__stats {
+    gap: var(--space-5);
+    padding: var(--space-4) var(--space-6);
+  }
+
+  /* ── Stats section ── */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+  }
+
+  /* ── Explore section header ── */
+  .explore-section__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+  }
+
+  .explore-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* ── Detail panel ── */
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Filter bar wrapping on tablets ── */
+  .filter-bar {
+    gap: var(--space-3);
+  }
+
+  .filter-bar__group--search {
+    flex: 1 1 100%;
+  }
+
+  .filter-bar__group--actions {
+    margin-left: 0;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   LARGE PHONES (≤ 767px) — stacked layout
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  :root {
+    --grid-cols: 1;    /* ← single column on mobile */
+  }
+
+  .container {
+    padding-inline: var(--space-4);
+  }
+
+  /* ── Navbar ── */
+  .logo-text {
+    font-size: var(--fs-base);
+  }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100svh;   /* full screen on mobile */
+    padding: var(--space-16) 0 var(--space-12);
+  }
+
+  .hero__inner {
+    gap: var(--space-5);
+  }
+
+  .hero__title {
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
+    line-height: 1.2;
+  }
+
+  .hero__description {
+    font-size: var(--fs-sm);
+    max-width: 100%;
+  }
+
+  .hero__search-wrapper {
+    max-width: 100%;
+  }
+
+  .hero__search-box {
+    padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  }
+
+  .hero__search-btn {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--fs-xs);
+  }
+
+  .hero__stats {
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-5);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero__stat-value {
+    font-size: var(--fs-xl);
+  }
+
+  .hero__ctas {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn--hero-primary {
+    width: 100%;
+    justify-content: center;
+    padding: var(--space-4) var(--space-6);
+  }
+
+  /* ── Section titles ── */
+  .section-title {
+    font-size: var(--fs-xl);
+  }
+
+  /* ── Stats section ── */
+  .stats-section {
+    padding: var(--space-14) 0;
+  }
+
+  .stats-section__header {
+    margin-bottom: var(--space-8);
+  }
+
+  .stats-section__subtitle {
+    font-size: var(--fs-sm);
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .stat-card {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .stat-card__icon-wrap {
+    width: 50px;
+    height: 50px;
+    margin-bottom: var(--space-3);
+  }
+
+  .stat-card__icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .stat-card__number {
+    font-size: clamp(1.75rem, 5vw, 2.25rem);
+  }
+
+  .stat-card__suffix {
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+  }
+
+  .stat-card__label {
+    font-size: var(--fs-sm);
+  }
+
+  .stat-card__desc {
+    font-size: var(--fs-xs);
+  }
+
+  /* ── Explore section ── */
+  .explore-section__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+    margin-bottom: var(--space-8);
+  }
+
+  .explore-section__subtitle {
+    font-size: var(--fs-sm);
+    max-width: 100%;
+  }
+
+  .explore-controls {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .explore-controls__btn {
+    font-size: var(--fs-xs);
+    padding: var(--space-2) var(--space-4);
+  }
+
+  /* ── Countries grid ── */
+  .countries-grid {
+    gap: var(--space-5);
+  }
+
+  /* ── Filter bar ── */
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+    padding: var(--space-4);
+  }
+
+  .filter-bar__group {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .filter-bar__group--search {
+    flex: 1 1 100%;
+  }
+
+  .filter-select {
+    flex: 1;
+    max-width: 65%;
+    min-height: 44px;
+    font-size: 16px; /* Prevents unwanted auto-zoom on iOS */
+  }
+
+  .filter-search-input {
+    font-size: 16px; /* Prevents unwanted auto-zoom on iOS */
+  }
+
+  /* 2-column action buttons row on mobile (Favorites & Clear) */
+  .filter-bar__group--fav,
+  .filter-bar__group--actions {
+    flex: 1 1 calc(50% - var(--space-2));
+    width: auto;
+    margin-left: 0;
+    justify-content: stretch;
+  }
+
+  .filter-clear-btn,
+  .filter-fav-btn {
+    width: 100%;
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  /* Accessible touch targets on mobile (min 44x44px) */
+  .hamburger,
+  .theme-toggle,
+  .country-card__fav-btn {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .country-card__btn.btn--details {
+    min-height: 44px;
+  }
+
+  .filter-bar__count {
+    margin-left: 0;
+  }
+
+  /* ── Regions ── */
+  .regions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ── Footer ── */
+  .footer__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* ── Back to top ── */
+  .back-to-top {
+    bottom: var(--space-4);
+    right: var(--space-4);
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* ── Detail panel slides up from bottom as native bottom sheet ── */
+  .detail-panel {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .detail-panel__card {
+    max-height: 92vh;
+    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+    padding-bottom: max(var(--space-6), env(safe-area-inset-bottom, 24px));
+  }
+
+  .detail-panel__close {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    top: var(--space-3);
+    right: var(--space-3);
+    margin-right: var(--space-3);
+    margin-bottom: calc(-44px - var(--space-3));
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .detail-panel__content {
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .detail-flag-wrap {
+    max-height: 220px;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   SMALL PHONES (≤ 479px) — single-column
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 479px) {
+  :root {
+    --grid-cols: 1;
+  }
+
+  .countries-grid {
+    gap: var(--space-4);
+  }
+
+  /* ── Country card — compact padding on tiny screens ── */
+  .country-card__body {
+    padding: var(--space-4);
+  }
+
+  .explore-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero__title {
+    font-size: clamp(1.4rem, 8vw, 1.9rem);
+  }
+
+  .hero__badge {
+    font-size: 0.65rem;
+    padding: var(--space-1) var(--space-3);
+  }
+
+  .hero__orb--1 {
+    width: 280px;
+    height: 280px;
+  }
+
+  .hero__orb--2 {
+    width: 200px;
+    height: 200px;
+  }
+
+  .hero__orb--3 {
+    display: none;
+  }
+
+  .regions-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+
+  .region-card {
+    padding: var(--space-5);
+  }
+
+  .region-card__icon {
+    font-size: 2rem;
+  }
+
+  .detail-panel__content {
+    padding: var(--space-5);
+  }
+
+  .detail-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .detail-action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   VERY SMALL PHONES (≤ 374px)
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 374px) {
+  .hero__stats {
+    display: none;    /* avoid cramping on tiny screens */
+  }
+
+  .hero__search-btn span {
+    display: none;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-bar__group--fav,
+  .filter-bar__group--actions {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   PRINT — strip decorative chrome
+   ───────────────────────────────────────────────────────────── */
+@media print {
+  .site-header,
+  .hero__map-bg,
+  .hero__orb,
+  .hero__badge,
+  .hero__search-wrapper,
+  .hero__ctas,
+  .hero__stats,
+  .mobile-menu,
+  .filter-bar,
+  .load-more-wrapper,
+  .back-to-top,
+  .toast-container,
+  .detail-panel__close {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  .hero {
+    background: white;
+    color: black;
+    min-height: auto;
+    padding: var(--space-8) 0;
+  }
+
+  .hero__title,
+  .hero__title-accent {
+    color: black;
+    text-shadow: none;
+  }
+
+  .hero__description {
+    color: black;
+  }
+
+  a {
+    color: black;
+    text-decoration: underline;
+  }
+
+  .countries-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

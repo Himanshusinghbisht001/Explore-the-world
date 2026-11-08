@@ -1,0 +1,17 @@
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor & IDE Directories
+.vscode/
+.idea/
+
+# Temporary and Scratch Files
+verify-*.js
+scratch/
+*.log
+
+# Optional Node artifacts
+node_modules/
+package-lock.json
